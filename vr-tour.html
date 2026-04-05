@@ -9,71 +9,43 @@
   <script src="https://cdn.jsdelivr.net/npm/pannellum@2.5.7/build/pannellum.js"></script>
   <link href="https://fonts.googleapis.com/css2?family=Outfit:wght@400;500;600;700;800&family=DM+Sans:wght@400;500;600&display=swap" rel="stylesheet">
   <style>
-    :root { --blue: #0080FF; --blue-dark: #0060CC; --dark: #0A0E1A; --dark-card: #121828; --dark-border: #1E2A3E; }
-    * { margin: 0; padding: 0; box-sizing: border-box; }
-    body { font-family: 'DM Sans', sans-serif; background: var(--dark); color: #fff; overflow: hidden; height: 100vh; }
-
-    /* TOP BAR */
-    .topbar { position: fixed; top: 0; left: 0; right: 0; height: 56px; background: rgba(10,14,26,0.95); backdrop-filter: blur(16px); z-index: 100; display: flex; align-items: center; justify-content: space-between; padding: 0 20px; border-bottom: 1px solid rgba(255,255,255,0.06); }
-    .topbar-left { display: flex; align-items: center; gap: 12px; }
-    .topbar-left a { display: flex; align-items: center; gap: 8px; text-decoration: none; color: #9CA3AF; font-size: 13px; font-weight: 500; transition: color 0.2s; }
-    .topbar-left a:hover { color: #fff; }
-    .topbar-left svg { width: 18px; height: 18px; }
-    .topbar-title { font-family: 'Outfit', sans-serif; font-weight: 700; font-size: 16px; color: #fff; }
-    .topbar-scene { font-size: 13px; color: #9CA3AF; }
-    .topbar-right { display: flex; align-items: center; gap: 16px; }
-
-    /* FLOOR NAV */
-    .floor-nav { position: fixed; left: 16px; top: 50%; transform: translateY(-50%); z-index: 100; display: flex; flex-direction: column; gap: 4px; }
-    .floor-btn { width: 44px; height: 40px; border: 1px solid var(--dark-border); background: rgba(18,24,40,0.9); backdrop-filter: blur(12px); color: #9CA3AF; font-family: 'Outfit', sans-serif; font-size: 12px; font-weight: 700; cursor: pointer; transition: all 0.25s; display: flex; align-items: center; justify-content: center; border-radius: 8px; }
-    .floor-btn:hover { border-color: var(--blue); color: #fff; }
-    .floor-btn.active { background: var(--blue); border-color: var(--blue); color: #fff; }
-    .floor-label { font-size: 9px; letter-spacing: 0.5px; color: #6B7280; text-align: center; margin-bottom: 4px; font-weight: 600; text-transform: uppercase; }
-
-    /* SCENE LIST */
-    .scene-panel { position: fixed; right: 0; top: 56px; bottom: 0; width: 280px; background: rgba(10,14,26,0.95); backdrop-filter: blur(16px); border-left: 1px solid rgba(255,255,255,0.06); z-index: 99; overflow-y: auto; transform: translateX(100%); transition: transform 0.3s; }
-    .scene-panel.open { transform: translateX(0); }
-    .scene-panel-header { padding: 16px 20px; border-bottom: 1px solid var(--dark-border); font-family: 'Outfit', sans-serif; font-weight: 700; font-size: 14px; display: flex; justify-content: space-between; align-items: center; }
-    .scene-panel-close { background: none; border: none; color: #9CA3AF; cursor: pointer; font-size: 20px; }
-    .scene-floor-group { padding: 8px 0; }
-    .scene-floor-label { padding: 8px 20px; font-size: 11px; font-weight: 700; letter-spacing: 1px; text-transform: uppercase; color: var(--blue); }
-    .scene-item { padding: 10px 20px; font-size: 13px; color: #9CA3AF; cursor: pointer; transition: all 0.2s; display: flex; align-items: center; gap: 10px; }
-    .scene-item:hover { background: rgba(255,255,255,0.04); color: #fff; }
-    .scene-item.active { color: var(--blue); background: rgba(0,128,255,0.06); }
-    .scene-item-dot { width: 6px; height: 6px; border-radius: 50%; background: #4B5563; flex-shrink: 0; }
-    .scene-item.active .scene-item-dot { background: var(--blue); }
-    .toggle-panel-btn { background: rgba(18,24,40,0.9); border: 1px solid var(--dark-border); color: #9CA3AF; width: 36px; height: 36px; border-radius: 8px; cursor: pointer; display: flex; align-items: center; justify-content: center; font-size: 16px; transition: all 0.2s; }
-    .toggle-panel-btn:hover { border-color: var(--blue); color: #fff; }
-
-    /* PANORAMA */
-    #panorama { position: fixed; top: 56px; left: 0; right: 0; bottom: 0; }
-
-    /* MOBILE */
-    @media (max-width: 768px) {
-      .floor-nav { left: 8px; }
-      .floor-btn { width: 36px; height: 34px; font-size: 11px; }
-      .scene-panel { width: 240px; }
-    }
+    :root{--blue:#0080FF;--blue-dark:#0060CC;--dark:#0A0E1A;--dark-card:#121828;--dark-border:#1E2A3E}
+    *{margin:0;padding:0;box-sizing:border-box}
+    body{font-family:'DM Sans',sans-serif;background:var(--dark);color:#fff;overflow:hidden;height:100vh}
+    .topbar{position:fixed;top:0;left:0;right:0;height:56px;background:rgba(10,14,26,.95);backdrop-filter:blur(16px);z-index:100;display:flex;align-items:center;justify-content:space-between;padding:0 20px;border-bottom:1px solid rgba(255,255,255,.06)}
+    .topbar-left{display:flex;align-items:center;gap:12px}
+    .topbar-left a{display:flex;align-items:center;gap:8px;text-decoration:none;color:#9CA3AF;font-size:13px;font-weight:500;transition:color .2s}
+    .topbar-left a:hover{color:#fff}
+    .topbar-left svg{width:18px;height:18px}
+    .topbar-title{font-family:'Outfit',sans-serif;font-weight:700;font-size:16px;color:#fff}
+    .topbar-scene{font-size:13px;color:#9CA3AF}
+    .floor-nav{position:fixed;left:16px;top:50%;transform:translateY(-50%);z-index:100;display:flex;flex-direction:column;gap:4px}
+    .floor-btn{width:44px;height:40px;border:1px solid var(--dark-border);background:rgba(18,24,40,.9);backdrop-filter:blur(12px);color:#9CA3AF;font-family:'Outfit',sans-serif;font-size:12px;font-weight:700;cursor:pointer;transition:all .25s;display:flex;align-items:center;justify-content:center;border-radius:8px}
+    .floor-btn:hover{border-color:var(--blue);color:#fff}
+    .floor-btn.active{background:var(--blue);border-color:var(--blue);color:#fff}
+    .floor-label{font-size:9px;letter-spacing:.5px;color:#6B7280;text-align:center;margin-bottom:4px;font-weight:600;text-transform:uppercase}
+    .scene-panel{position:fixed;right:0;top:56px;bottom:0;width:280px;background:rgba(10,14,26,.95);backdrop-filter:blur(16px);border-left:1px solid rgba(255,255,255,.06);z-index:99;overflow-y:auto;transform:translateX(100%);transition:transform .3s}
+    .scene-panel.open{transform:translateX(0)}
+    .scene-panel-header{padding:16px 20px;border-bottom:1px solid var(--dark-border);font-family:'Outfit',sans-serif;font-weight:700;font-size:14px;display:flex;justify-content:space-between;align-items:center}
+    .scene-panel-close{background:none;border:none;color:#9CA3AF;cursor:pointer;font-size:20px}
+    .scene-floor-label{padding:8px 20px;font-size:11px;font-weight:700;letter-spacing:1px;text-transform:uppercase;color:var(--blue)}
+    .scene-item{padding:10px 20px;font-size:13px;color:#9CA3AF;cursor:pointer;transition:all .2s;display:flex;align-items:center;gap:10px}
+    .scene-item:hover{background:rgba(255,255,255,.04);color:#fff}
+    .scene-item.active{color:var(--blue);background:rgba(0,128,255,.06)}
+    .scene-item-dot{width:6px;height:6px;border-radius:50%;background:#4B5563;flex-shrink:0}
+    .scene-item.active .scene-item-dot{background:var(--blue)}
+    .toggle-panel-btn{background:rgba(18,24,40,.9);border:1px solid var(--dark-border);color:#9CA3AF;width:36px;height:36px;border-radius:8px;cursor:pointer;display:flex;align-items:center;justify-content:center;font-size:16px;transition:all .2s}
+    .toggle-panel-btn:hover{border-color:var(--blue);color:#fff}
+    #panorama{position:fixed;top:56px;left:0;right:0;bottom:0}
+    @media(max-width:768px){.floor-nav{left:8px}.floor-btn{width:36px;height:34px;font-size:11px}.scene-panel{width:240px}}
   </style>
 </head>
 <body>
-
 <div class="topbar">
-  <div class="topbar-left">
-    <a href="index.html">
-      <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M15 18l-6-6 6-6"/></svg>
-      Back to Home
-    </a>
-  </div>
-  <div style="text-align:center;">
-    <div class="topbar-title">360° VR Factory Tour</div>
-    <div class="topbar-scene" id="current-scene-label">Huizhou Factory · 9 Floors</div>
-  </div>
-  <div class="topbar-right">
-    <button class="toggle-panel-btn" onclick="togglePanel()" title="Scene List">☰</button>
-  </div>
+  <div class="topbar-left"><a href="index.html"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M15 18l-6-6 6-6"/></svg>Back to Home</a></div>
+  <div style="text-align:center"><div class="topbar-title">360° VR Factory Tour</div><div class="topbar-scene" id="current-scene-label">Huizhou Factory · 9 Floors</div></div>
+  <div class="topbar-right"><button class="toggle-panel-btn" onclick="togglePanel()" title="Scene List">☰</button></div>
 </div>
-
 <div class="floor-nav">
   <div class="floor-label">Floor</div>
   <button class="floor-btn active" data-floor="1" onclick="goFloor(1)">1F</button>
@@ -86,180 +58,80 @@
   <button class="floor-btn" data-floor="8" onclick="goFloor(8)">8F</button>
   <button class="floor-btn" data-floor="9" onclick="goFloor(9)">9F</button>
 </div>
-
 <div class="scene-panel" id="scene-panel">
-  <div class="scene-panel-header">
-    All Scenes
-    <button class="scene-panel-close" onclick="togglePanel()">✕</button>
-  </div>
+  <div class="scene-panel-header">All Scenes<button class="scene-panel-close" onclick="togglePanel()">✕</button></div>
   <div id="scene-list"></div>
 </div>
-
 <div id="panorama"></div>
-
 <script>
-// === SCENE DATA ===
-const scenes = [
-  { id: "F1-01", floor: 1, label: "1F Entrance", file: "F1-01-Huizhou Factory 1st floor entrance.jpg" },
-  { id: "F2-01", floor: 2, label: "2F Shipping Warehouse (1)", file: "F2-01-Logistics - Shipping warehouses.jpg" },
-  { id: "F2-02", floor: 2, label: "2F Shipping Warehouse (2)", file: "F2-02-Logistics - Shipping warehouses.jpg" },
-  { id: "F3-01", floor: 3, label: "3F Finished Product Warehouse (1)", file: "F3-01-Finished product warehouse.jpg" },
-  { id: "F3-02", floor: 3, label: "3F Finished Product Warehouse (2)", file: "F3-02-Finished product warehouse.jpg" },
-  { id: "F4-01", floor: 4, label: "4F Supply Chain Office (1)", file: "F4-01-Supply Chain Office .jpg" },
-  { id: "F4-02", floor: 4, label: "4F Supply Chain Office (2)", file: "F4-02-Supply Chain Office.jpg" },
-  { id: "F4-03", floor: 4, label: "4F IQC Laboratory (1)", file: "F4-03-IQC Laboratory.jpg" },
-  { id: "F4-04", floor: 4, label: "4F IQC Laboratory (2)", file: "F4-04-IQC Laboratory.jpg" },
-  { id: "F4-05", floor: 4, label: "4F Material Warehouse & Engineering Lab", file: "F4-05-Material warehouse and engineering laboratory.jpg" },
-  { id: "F4-06", floor: 4, label: "4F Material Warehouse & Reliability Testing", file: "F4-06-Material warehouse and reliability testing laboratory.jpg" },
-  { id: "F5-01", floor: 5, label: "5F Manufacturing Workshop", file: "F5-01-Manufacturing workshop.jpg" },
-  { id: "F5-02", floor: 5, label: "5F Dust-free Workshop Entrance", file: "F5-02-Dust-free workshop - entrance.jpg" },
-  { id: "F5-03", floor: 5, label: "5F Dust-free Workshop (1)", file: "F5-03-Dust-free workshop-interior.jpg" },
-  { id: "F5-04", floor: 5, label: "5F Dust-free Workshop (2)", file: "F5-04-Dust-free workshop-interior.jpg" },
-  { id: "F5-05", floor: 5, label: "5F Dust-free Workshop (3)", file: "F5-05-Dust-free workshop-interior.jpg" },
-  { id: "F5-06", floor: 5, label: "5F Dust-free Workshop (4)", file: "F5-06-Dust-free workshop-interior.jpg" },
-  { id: "F5-07", floor: 5, label: "5F Workshop Warehouse (1)", file: "F5-07-Workshop warehouse.jpg" },
-  { id: "F5-08", floor: 5, label: "5F Workshop Warehouse (2)", file: "F5-08-Workshop warehouse.jpg" },
-  { id: "F6-01", floor: 6, label: "6F Workshop Warehouse (1)", file: "F6-01-Workshop warehouse..jpg" },
-  { id: "F6-02", floor: 6, label: "6F Workshop Warehouse (2)", file: "F6-02-Workshop warehouse.jpg" },
-  { id: "F6-03", floor: 6, label: "6F Manufacturing Workshop (1)", file: "F6-03-Manufacturing workshop.jpg" },
-  { id: "F6-04", floor: 6, label: "6F Manufacturing Workshop (2)", file: "F6-04-IManufacturing workshop.jpg" },
-  { id: "F6-05", floor: 6, label: "6F Manufacturing Workshop (3)", file: "F6-05-Manufacturing workshop.jpg" },
-  { id: "F7-01", floor: 7, label: "7F Manufacturing Workshop (1)", file: "F7-01-Manufacturing workshop.jpg" },
-  { id: "F7-02", floor: 7, label: "7F Manufacturing Workshop (2)", file: "F7-02-Manufacturing workshop.jpg" },
-  { id: "F7-03", floor: 7, label: "7F Manufacturing Workshop (3)", file: "F7-03-Manufacturing workshop.jpg" },
-  { id: "F7-04", floor: 7, label: "7F Manufacturing Workshop (4)", file: "F7-04-Manufacturing workshop.jpg" },
-  { id: "F7-05", floor: 7, label: "7F Manufacturing Workshop (5)", file: "F7-05-Manufacturing workshop.jpg" },
-  { id: "F7-06", floor: 7, label: "7F Manufacturing Workshop (6)", file: "F7-06-Manufacturing workshop.jpg" },
-  { id: "F7-07", floor: 7, label: "7F Manufacturing Workshop (7)", file: "F7-07-Manufacturing workshop.jpg" },
-  { id: "F7-08", floor: 7, label: "7F SMT Workshop Entrance", file: "F7-08-SMT workshop - entrance.jpg" },
-  { id: "F7-09", floor: 7, label: "7F SMT Workshop Interior", file: "F7-09-SMT workshop-interior.jpg" },
-  { id: "F8-01", floor: 8, label: "8F Workshop Warehouse (1)", file: "F8-01-Workshop warehouse.jpg" },
-  { id: "F8-02", floor: 8, label: "8F Workshop Warehouse (2)", file: "F8-02-Workshop warehouse.jpg" },
-  { id: "F8-03", floor: 8, label: "8F X-Ray Testing Chamber", file: "F8-03-X-RAY Testing Chamber.jpg" },
-  { id: "F8-04", floor: 8, label: "8F Constant Temp Electronic Warehouse", file: "F8-04-Constant temperature electronic warehouse.jpg" },
-  { id: "F8-05", floor: 8, label: "8F SMT Workshop Entrance", file: "F8-05-SMT workshop-entrance.jpg" },
-  { id: "F8-06", floor: 8, label: "8F SMT Workshop (1)", file: "F8-06-SMT workshop - inside.jpg" },
-  { id: "F8-07", floor: 8, label: "8F SMT Workshop (2)", file: "F8-07-SMT workshop - inside.jpg" },
-  { id: "F8-09", floor: 8, label: "8F SMT Workshop (3)", file: "F8-09-SMT workshop - inside.jpg" },
-  { id: "F8-10", floor: 8, label: "8F SMT Workshop (4)", file: "F8-10-SMT workshop - inside.jpg" },
-  { id: "F8-11", floor: 8, label: "8F SMT Workshop (5)", file: "F8-11-SMT workshop - inside.jpg" },
-  { id: "F8-12", floor: 8, label: "8F SMT Workshop (6)", file: "F8-12-SMT workshop - inside.jpg" },
-  { id: "F8-13", floor: 8, label: "8F SMT Workshop (7)", file: "F8-13-SMT workshop - inside.jpg" },
-  { id: "F8-14", floor: 8, label: "8F SMT Workshop (8)", file: "F8-14-SMT workshop - inside.jpg" },
-  { id: "F8-15", floor: 8, label: "8F SMT Workshop (9)", file: "F8-15-SMT workshop - inside.jpg" },
-  { id: "F8-16", floor: 8, label: "8F SMT Workshop (10)", file: "F8-16-SMT workshop - inside.jpg" },
-  { id: "F9-01", floor: 9, label: "9F Warehouse Office", file: "F9-01-Warehouse office.jpg" },
-  { id: "F9-02", floor: 9, label: "9F Materials To Be Tested", file: "F9-02-Warehouse-materials-to-be-tested.jpg" },
-  { id: "F9-03", floor: 9, label: "9F Module Warehouse", file: "F9-03-Module warehouse.jpg" },
-  { id: "F9-04", floor: 9, label: "9F IC Warehouse", file: "F9-04-IC warehouse.jpg" },
-  { id: "F9-05", floor: 9, label: "9F Electronic Material Warehouse (1)", file: "F9-05-Electronic material warehouse.jpg" },
-  { id: "F9-06", floor: 9, label: "9F Electronic Material Warehouse (2)", file: "F9-06-Electronic material warehouse.jpg" },
-  { id: "F9-07", floor: 9, label: "9F Electronic Material Warehouse (3)", file: "F9-07-Electronic material warehouse.jpg" },
+const scenes=[
+{id:"F1-01",floor:1,label:"1F Factory Entrance",file:"F1-01-Huizhou Factory 1st floor entrance_Facing the elevator.jpg"},
+{id:"F2-01",floor:2,label:"2F Shipping Warehouse (1)",file:"F2-01-Logistics - Shipping warehouses_Facing the warehouse.jpg"},
+{id:"F2-02",floor:2,label:"2F Shipping Warehouse (2)",file:"F2-02-Logistics - Shipping warehouses_Facing the warehouse.jpg"},
+{id:"F3-01",floor:3,label:"3F Finished Product Warehouse (1)",file:"F3-01-Finished product warehouse_Facing the end of the warehouse.jpg"},
+{id:"F3-02",floor:3,label:"3F Finished Product Warehouse (2)",file:"F3-02-Finished product warehouse_Facing the end of the warehouse.jpg"},
+{id:"F4-01",floor:4,label:"4F Supply Chain Office (1)",file:"F4-01-Supply Chain Office_Facing the front desk, to the right is the materials warehouse and engineering laboratory..jpg"},
+{id:"F4-02",floor:4,label:"4F Supply Chain Office (2)",file:"F4-02-Supply Chain Office_Facing the wall, on the left is the IQC lab and materials warehouse and engineering laboratory..jpg"},
+{id:"F4-03",floor:4,label:"4F IQC Laboratory (1)",file:"F4-03-IQC Laboratory_Facing the Material warehouse and engineering laboratory, on the right is the interior of the IQC laboratory.jpg"},
+{id:"F4-04",floor:4,label:"4F IQC Laboratory (2)",file:"F4-04-IQC Laboratory_Facing the interior of the IQC laboratory, with the IQC entrance behind it.jpg"},
+{id:"F4-05",floor:4,label:"4F Material Warehouse & Engineering Lab",file:"F4-05-Material warehouse and engineering laboratory_Facing the end of the Material warehouse, on the right is the engineering laboratory, and behind it is the Supply Chain Office.jpg"},
+{id:"F4-06",floor:4,label:"4F Material Warehouse & Reliability Lab",file:"F4-06-Material warehouse and reliability testing laboratory_Facing the end of the Material warehouse, on the right is the Reliability Laboratory, and behind it is the Supply Chain Office..jpg"},
+{id:"F5-01",floor:5,label:"5F Corridor",file:"F5-01-Corridor_Facing the entrance of the production workshop, the warehouse is on the right.jpg"},
+{id:"F5-02",floor:5,label:"5F Dust-free Workshop Entrance",file:"F5-02-Dust-free workshop - entrance_Facing the entrance of Dust-free workshop, on the right is the corridor of F5-01.jpg"},
+{id:"F5-03",floor:5,label:"5F Dust-free Workshop Interior (1)",file:"F5-03-Dust-free workshop-interior_Facing the end of Dust-free workshop, behind is the entrance of Dust-free workshop.jpg"},
+{id:"F5-04",floor:5,label:"5F Dust-free Workshop Interior (2)",file:"F5-04-Dust-free workshop-interior_The right side is near the end of the Dust-free workshop, and the far left side is the entrance to the Dust-free workshop..jpg"},
+{id:"F5-05",floor:5,label:"5F Workshop Warehouse (1)",file:"F5-05-Workshop warehouse_Adjacent to F5-01, with the F5-01 corridor behind and the warehouse entrance in front.jpg"},
+{id:"F5-08",floor:5,label:"5F Workshop Warehouse (2)",file:"F5-08-Workshop warehouse_Adjacent to F5-05, with the warehouse entrance behind and the end of the warehouse in front of it.jpg"},
+{id:"F6-01",floor:6,label:"6F Corridor",file:"F6-01-Corridor, facing the warehouse entrance, the manufacturing workshop is on the right hand side.jpg"},
+{id:"F6-02",floor:6,label:"6F Workshop Warehouse",file:"F6-02-Workshop warehouse_Facing the interior of the warehouse, on the right hand side is corridor F6-01.jpg"},
+{id:"F6-03",floor:6,label:"6F Manufacturing Workshop (1)",file:"F6-03-Manufacturing workshop_Adjacent to F6-01, facing the inside of the manufacturing workshop, and behind it is the F6-01 corridor.jpg"},
+{id:"F6-04",floor:6,label:"6F Manufacturing Workshop (2)",file:"F6-04-IManufacturing workshop_Face to face with F6-03, facing the entrance of the manufacturing workshop, and behind it is the end of the workshop.jpg"},
+{id:"F6-05",floor:6,label:"6F Manufacturing Workshop (3)",file:"F6-05-Manufacturing workshop_Adjacent to F6-04, the entrance to the manufacturing workshop is on the left and the end of the workshop is on the right.jpg"},
+{id:"F7-01",floor:7,label:"7F Manufacturing Workshop (1)",file:"F7-01-Manufacturing workshop_At the entrance, facing the manufacturing workshop.jpg"},
+{id:"F7-02",floor:7,label:"7F Manufacturing Workshop (2)",file:"F7-02-Manufacturing workshop_Facing the interior of the manufacturing workshop, with the workshop entrance behind it.jpg"},
+{id:"F7-03",floor:7,label:"7F Manufacturing Workshop (3)",file:"F7-03-Manufacturing workshop_Adjacent to F7-02, behind it is the location of F7-02.jpg"},
+{id:"F7-04",floor:7,label:"7F Manufacturing Workshop (4)",file:"F7-04-Manufacturing workshop_Behind is F7-03, on the right is F7-05.jpg"},
+{id:"F7-05",floor:7,label:"7F Manufacturing Workshop (5)",file:"F7-05-Manufacturing workshop_Behind you is F7-04, in front of you is F7-06.jpg"},
+{id:"F7-06",floor:7,label:"7F Manufacturing Workshop (6)",file:"F7-06-Manufacturing workshop_On the right is F7-05, in front of you is F7-07.jpg"},
+{id:"F7-07",floor:7,label:"7F Manufacturing Workshop (7)",file:"F7-07-Manufacturing workshop_On the right is F7-06, in front of you is F7-08.jpg"},
+{id:"F7-08",floor:7,label:"7F SMT Workshop Entrance",file:"F7-08-SMT workshop - entrance_On the left is F7-07, in front is the interior of the SMT workshop, and on the right is F7-02.jpg"},
+{id:"F7-09",floor:7,label:"7F SMT Workshop Interior",file:"F7-09-SMT workshop-interior_Behind is F7-08, the entrance to the SMT workshop.jpg"},
+{id:"F8-01",floor:8,label:"8F Workshop Warehouse (1)",file:"F8-01-Workshop warehouse_In front of me is F8-02.jpg"},
+{id:"F8-02",floor:8,label:"8F Workshop Warehouse (2)",file:"F8-02-Workshop warehouse_In front of you is F8-03, behind you is F8-01.jpg"},
+{id:"F8-03",floor:8,label:"8F X-Ray Testing Chamber",file:"F8-03-X-RAY Testing Chamber\u2014\u2014In front of you is F8-04, behind you is F8-02.jpg"},
+{id:"F8-04",floor:8,label:"8F Constant Temp Electronic Warehouse",file:"F8-04-Constant temperature electronic warehouse\u2014\u2014In front of you is F8-05, behind you is F8-03.jpg"},
+{id:"F8-05",floor:8,label:"8F SMT Workshop Entrance",file:"F8-05-SMT workshop-entrance_The entrance to F8-06 is on the left in front of you, and F8-04 is behind you..jpg"},
+{id:"F8-06",floor:8,label:"8F SMT Workshop (1)",file:"F8-06-SMT workshop - inside_The left side is F8-05 and the right side is F8-07.jpg"},
+{id:"F8-07",floor:8,label:"8F SMT Workshop (2)",file:"F8-07-SMT workshop - inside_On the left is F8-06, in front of you is F8-08.jpg"},
+{id:"F8-08",floor:8,label:"8F SMT Workshop (3)",file:"F8-08-SMT workshop - inside_Behind you is F8-07, in front of you is F8-09.jpg"},
+{id:"F8-09",floor:8,label:"8F SMT Workshop (4)",file:"F8-09-SMT workshop - inside_Behind you is F8-08, in front of you is F8-10.jpg"},
+{id:"F8-10",floor:8,label:"8F SMT Workshop (5)",file:"F8-10-SMT workshop - inside_In front of you is F8-09, on the right is F8-11.jpg"},
+{id:"F8-11",floor:8,label:"8F SMT Workshop (6)",file:"F8-11-SMT workshop - inside_In front of you is F8-12, on the left is F8-10.jpg"},
+{id:"F8-12",floor:8,label:"8F SMT Workshop (7)",file:"F8-12-SMT workshop - inside_In front of you is F8-06, behind you is F8-11.jpg"},
+{id:"F9-01",floor:9,label:"9F Warehouse Office",file:"F9-01-Warehouse office_In front of you is F9-02.jpg"},
+{id:"F9-02",floor:9,label:"9F Materials To Be Tested",file:"F9-02-Warehouse-materials-to-be-tested_In front of you is F9-03, behind you is F9-01.jpg"},
+{id:"F9-03",floor:9,label:"9F Module Warehouse",file:"F9-03-Module warehouse_In front of you is F9-04, behind you is F9-02.jpg"},
+{id:"F9-04",floor:9,label:"9F IC Warehouse",file:"F9-04-IC warehouse_In front of you is F9-05, behind you is F9-03.jpg"},
+{id:"F9-05",floor:9,label:"9F Electronic Material Warehouse (1)",file:"F9-05-Electronic material warehouse_In front of you is F9-06, behind you is F9-04.jpg"},
+{id:"F9-06",floor:9,label:"9F Electronic Material Warehouse (2)",file:"F9-06-Electronic material warehouse_In front of you is F9-07, behind you is F9-05.jpg"},
+{id:"F9-07",floor:9,label:"9F Electronic Material Warehouse (3)",file:"F9-07-Electronic material warehouse, behind F9-06.jpg"},
 ];
-
-// Build Pannellum config
-const pannellumScenes = {};
-const firstScenePerFloor = {};
-
-scenes.forEach((s, i) => {
-  if (!firstScenePerFloor[s.floor]) firstScenePerFloor[s.floor] = s.id;
-
-  const hotSpots = [];
-  // Link to next scene on same floor
-  if (i < scenes.length - 1 && scenes[i+1].floor === s.floor) {
-    hotSpots.push({
-      pitch: -8, yaw: 90, type: "scene", text: "Next → " + scenes[i+1].label, sceneId: scenes[i+1].id,
-      cssClass: "hotspot-next"
-    });
-  }
-  // Link to previous scene on same floor
-  if (i > 0 && scenes[i-1].floor === s.floor) {
-    hotSpots.push({
-      pitch: -8, yaw: -90, type: "scene", text: "← Back: " + scenes[i-1].label, sceneId: scenes[i-1].id,
-      cssClass: "hotspot-prev"
-    });
-  }
-
-  pannellumScenes[s.id] = {
-    title: s.label,
-    type: "equirectangular",
-    panorama: "images/panoramas/" + s.file,
-    autoLoad: true,
-    hfov: 110,
-    hotSpots: hotSpots
-  };
+const pannellumScenes={};const firstScenePerFloor={};
+scenes.forEach((s,i)=>{
+  if(!firstScenePerFloor[s.floor])firstScenePerFloor[s.floor]=s.id;
+  const hotSpots=[];
+  if(i<scenes.length-1&&scenes[i+1].floor===s.floor)hotSpots.push({pitch:-8,yaw:90,type:"scene",text:"Next \u2192 "+scenes[i+1].label,sceneId:scenes[i+1].id});
+  if(i>0&&scenes[i-1].floor===s.floor)hotSpots.push({pitch:-8,yaw:-90,type:"scene",text:"\u2190 Back: "+scenes[i-1].label,sceneId:scenes[i-1].id});
+  pannellumScenes[s.id]={title:s.label,type:"equirectangular",panorama:"images/panoramas/"+encodeURIComponent(s.file),autoLoad:true,hfov:110,hotSpots:hotSpots};
 });
-
-// Init viewer
-const viewer = pannellum.viewer('panorama', {
-  default: {
-    firstScene: "F1-01",
-    sceneFadeDuration: 600,
-    autoLoad: true,
-    compass: false,
-    showControls: true,
-    mouseZoom: true,
-  },
-  scenes: pannellumScenes
-});
-
-// Update UI on scene change
-viewer.on('scenechange', function(sceneId) {
-  updateUI(sceneId);
-});
-updateUI("F1-01");
-
-function updateUI(sceneId) {
-  const scene = scenes.find(s => s.id === sceneId);
-  if (!scene) return;
-
-  // Update topbar
-  document.getElementById('current-scene-label').textContent = scene.label;
-
-  // Update floor buttons
-  document.querySelectorAll('.floor-btn').forEach(btn => {
-    btn.classList.toggle('active', parseInt(btn.dataset.floor) === scene.floor);
-  });
-
-  // Update scene list
-  document.querySelectorAll('.scene-item').forEach(item => {
-    item.classList.toggle('active', item.dataset.scene === sceneId);
-  });
-}
-
-function goFloor(floor) {
-  const firstScene = firstScenePerFloor[floor];
-  if (firstScene) {
-    viewer.loadScene(firstScene);
-  }
-}
-
-function goScene(sceneId) {
-  viewer.loadScene(sceneId);
-}
-
-function togglePanel() {
-  document.getElementById('scene-panel').classList.toggle('open');
-}
-
-// Build scene list sidebar
-const listEl = document.getElementById('scene-list');
-let currentFloor = 0;
-scenes.forEach(s => {
-  if (s.floor !== currentFloor) {
-    currentFloor = s.floor;
-    const floorLabel = document.createElement('div');
-    floorLabel.className = 'scene-floor-label';
-    floorLabel.textContent = 'Floor ' + s.floor;
-    listEl.appendChild(floorLabel);
-  }
-  const item = document.createElement('div');
-  item.className = 'scene-item' + (s.id === 'F1-01' ? ' active' : '');
-  item.dataset.scene = s.id;
-  item.innerHTML = '<span class="scene-item-dot"></span>' + s.label;
-  item.onclick = () => { goScene(s.id); };
-  listEl.appendChild(item);
-});
+const viewer=pannellum.viewer('panorama',{default:{firstScene:"F1-01",sceneFadeDuration:600,autoLoad:true,compass:false,showControls:true,mouseZoom:true},scenes:pannellumScenes});
+viewer.on('scenechange',function(id){updateUI(id)});updateUI("F1-01");
+function updateUI(id){const s=scenes.find(x=>x.id===id);if(!s)return;document.getElementById('current-scene-label').textContent=s.label;document.querySelectorAll('.floor-btn').forEach(b=>{b.classList.toggle('active',parseInt(b.dataset.floor)===s.floor)});document.querySelectorAll('.scene-item').forEach(x=>{x.classList.toggle('active',x.dataset.scene===id)})}
+function goFloor(f){if(firstScenePerFloor[f])viewer.loadScene(firstScenePerFloor[f])}
+function goScene(id){viewer.loadScene(id)}
+function togglePanel(){document.getElementById('scene-panel').classList.toggle('open')}
+const listEl=document.getElementById('scene-list');let cf=0;
+scenes.forEach(s=>{if(s.floor!==cf){cf=s.floor;const fl=document.createElement('div');fl.className='scene-floor-label';fl.textContent='Floor '+s.floor;listEl.appendChild(fl)}const item=document.createElement('div');item.className='scene-item'+(s.id==='F1-01'?' active':'');item.dataset.scene=s.id;item.innerHTML='<span class="scene-item-dot"></span>'+s.label;item.onclick=()=>goScene(s.id);listEl.appendChild(item)});
 </script>
 </body>
 </html>
